@@ -25,10 +25,30 @@
 
 __version__ = "0.1"
 
+
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdftypes import PDFObjectNotFound
 from pdfminer.converter import TextConverter
+
+def extractText(fp, caching=False, codec='utf-8', laparams=None):
+    import StringIO
+    outfp = StringIO.StringIO()
+
+    rsrcmgr = PDFResourceManager(caching=caching)
+    device = TextConverter(rsrcmgr, outfp, codec=codec, laparams=laparams,
+                               imagewriter=None)
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    for page in PDFPage.get_pages(fp, pagenos,
+                                  maxpages=maxpages, password=password,
+                                  caching=caching, check_extractable=True):
+        page.rotate = (page.rotate+rotation) % 360
+        interpreter.process_page(page)
+    device.close()
+    result = outfp.getvalue()
+    outfp.close()
+    return result
+
 
 def extractComments(fp):
     parser = PDFParser(fp)
