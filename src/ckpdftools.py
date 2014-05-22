@@ -71,7 +71,7 @@ def extractComments(fp):
                 except:
                     pi = -1
                 try:
-                    result = (objid, pi, obj['Subtype'].name, obj['Subj'],obj['T'],obj['Contents'])
+                    result = (fp.name, objid, pi, obj['Subtype'].name, obj['Subj'],obj['T'],obj['Contents'])
                 except:
                     # if any of the listed entries do not exist, ignore 
                     #print(objid, pi, obj['Subtype'].name)
