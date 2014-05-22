@@ -65,8 +65,8 @@ def extractComments(fp):
             if obj.has_key('Type') and obj['Type'].name == 'Page':
                 pages.append(objid)
             elif obj.has_key('C'):
-                pr = obj['P']
                 try:
+                    pr = obj['P']
                     pi = pages.index(pr.objid)+1
                 except:
                     pi = -1
