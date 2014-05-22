@@ -97,8 +97,9 @@ def extractComments(fp):
 def main(argv=None):
     # not using argparser to support Python<2.7
     from optparse import OptionParser
+    from glob import glob
 
-    usage = "usage: %prog [options] pdf"
+    usage = "usage: %prog [options] <file.pdf> <...>"
     parser = OptionParser(usage)
     parser.set_defaults(verbose=False)
     parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
@@ -111,9 +112,11 @@ def main(argv=None):
         parser.print_help()
         return 2
 
-    with file(args[0], 'rb') as fp:
-        for i in extractComments(fp):
-            print i
+    for f_glob in args:
+        for f in glob(f_glob):
+            with file(f, 'rb') as fp:
+                for i in extractComments(fp):
+                    print i
 
     return 0
 
