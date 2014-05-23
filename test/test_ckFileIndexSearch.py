@@ -7,7 +7,7 @@ import unittest, os
 from shutil import rmtree
 from tempfile import mkdtemp
 
-import ckpdfsearch
+import ckFileIndexSearch
 class AttachmentSearchClassFixture(unittest.TestCase):
     def setUp(self):
         self.idxDir = mkdtemp(".ckdpftest")
@@ -24,7 +24,7 @@ class TestAttachmentSearchClass_CreateAndPurge(AttachmentSearchClassFixture):
 
     def testCreateAndPurge(self):
 
-        idx  = ckpdfsearch.AttachmentSearchIndex(self.idxDir)
+        idx  = ckFileIndexSearch.AttachmentSearchIndex(self.idxDir)
         assert idx.idxPath == self.idxDir
 
         idx.openIndex()
@@ -44,7 +44,7 @@ class TestAttachmentSearchClass_CreateAndPurge(AttachmentSearchClassFixture):
 class TestAttachmentSearchClass_TestIndex(AttachmentSearchClassFixture):
     def setUp(self):
         AttachmentSearchClassFixture.setUp(self)
-        self.idx  = ckpdfsearch.AttachmentSearchIndex(self.idxDir)
+        self.idx  = ckFileIndexSearch.AttachmentSearchIndex(self.idxDir)
 
     def test1(self):
         pass
