@@ -119,7 +119,7 @@ def test():
         query = QueryParser("content", ix.schema).parse("first")
         results = searcher.search(query, terms=True)
         for i in results:
-            print i, i.matched_terms()
+            print(i, i.matched_terms())
 
     return results
 
