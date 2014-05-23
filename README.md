@@ -9,3 +9,7 @@ e.g. comments.
 
  * [PDF-Miner](http://...) for extraction
  * [Woosh](http://...) for indexing/search
+
+
+[![Build
+ Status](https://travis-ci.org/ckolumbus/CkPyPdftools.svg?branch=master)](https://travis-ci.org/ckolumbus/CkPyPdftools)
