@@ -25,16 +25,81 @@
 
 __version__ = "0.1"
 
-from whoosh.index import create_in
-from whoosh.fields import *
+import os, os.path
+from shutil import rmtree
+from whoosh import index
+from whoosh.fields import SchemaClass, TEXT, KEYWORD, ID, STORED
+from whoosh.analysis import StemmingAnalyzer
+
+class AttachmentSearchSchema(SchemaClass):
+    path     = ID  (stored=True)
+    checksum = ID  (stored=True)
+    content  = TEXT(analyzer=StemmingAnalyzer())
+    author   = TEXT(stored=True)
+    atype    = TEXT(stored=True)
+    asubtype = TEXT(stored=True)
+    tags     = KEYWORD
 
 
-def crateIndex():
-    pass
+class AttachmentSearchIndex:
+
+    def __init__(self, idxPath, idxName=None, idxSchema=AttachmentSearchSchema):
+        # avoid wrong relative adressing if cwd changes during operations
+        self.idxPath   = os.path.realpath(idxPath)
+        self.idxName   = idxName
+        self.idxSchema = idxSchema
+        self.idx       = None
 
 
-def searchIndex():
-    pass
+    def _openIndex(self):
+        self.ix = index.open_dir(self.idxPath)
+
+    def _createIndex(self):
+        try:
+            os.mkdir(self.idxPath)
+        except:
+            pass
+        self.ix = index.create_in(self.idxPath, self.idxSchema)
+
+    def openIndex(self, create=True):
+        # close before reopening
+        self.closeIndex()
+
+        # is the index  NOT valid...
+        if not index.exists_in(self.idxPath):
+            # if no creation requested = return
+            if not create:
+                return False
+
+            # .. create the index... 
+            self._createIndex()
+        else:
+            # ... otherwise just open it.
+            self._openIndex()
+
+        return self.ix is not None
+
+    def purgeIndexDir(self, doIt=False):
+        self.closeIndex()
+        if doIt:
+            rmtree(self.idxPath)
+
+    def closeIndex(self):
+        if self.idx:
+            self.idx.close()
+            self.idx = None
+
+    def isValid(self):
+        return index.exists_in(self.idxPath)
+
+    def search(self, ):
+        pass
+
+    def addFileToIndex(self, path):
+        pass
+
+    def addDirToIndex(self, path, recursive=False):
+        pass
 
 
 def test():
@@ -49,19 +114,20 @@ def test():
                         content=u"The second one is even more interesting!")
     writer.commit()
     from whoosh.qparser import QueryParser
+    results = None
     with ix.searcher() as searcher:
         query = QueryParser("content", ix.schema).parse("first")
-        results = searcher.search(query)
+        results = searcher.search(query, terms=True)
         for i in results:
-            print i
+            print i, i.matched_terms()
 
-
+    return results
 
 def main(argv=None):
     # not using argparser to support Python<2.7
     from optparse import OptionParser
 
-    usage = "usage: %prog [options] {dir|files}"
+    usage = "usage: %prog [options] <cmd> [{dir|files} ...]"
     parser = OptionParser(usage)
     parser.set_defaults(verbose=False)
     parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
@@ -73,7 +139,6 @@ def main(argv=None):
     if len(args) == 0:
         parser.print_help()
         return 2
-
 
     test()
     return 0
