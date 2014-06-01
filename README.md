@@ -13,3 +13,6 @@ e.g. comments.
 
 [![Build
  Status](https://travis-ci.org/ckolumbus/CkPyPdftools.svg?branch=master)](https://travis-ci.org/ckolumbus/CkPyPdftools)
+
+[![Coverage
+Status](https://coveralls.io/repos/ckolumbus/CkPyPdftools/badge.png?branch=master)](https://coveralls.io/r/ckolumbus/CkPyPdftools?branch=master)
