@@ -1,0 +1,11 @@
+#!/bin/sh -e
+# this a (self-) bootstrapping script, it will create a virtualenv and install jinja2 in it
+# ckol: reworked from http://blog.ionelmc.ro/2014/05/25/python-packaging/
+
+if [ ! -e .bootstrap ]; then
+    virtualenv .bootstrap
+    .bootstrap/bin/pip install jinja2
+fi
+.bootstrap/bin/python $0.py $*
+exit
+
