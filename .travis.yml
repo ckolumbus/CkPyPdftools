@@ -4,8 +4,16 @@ env:
   global:
     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
+    - TOXENV=2.6-2.6,coveralls
+    - TOXENV=2.6-2.6-nocover
     - TOXENV=2.7-2.6,coveralls
     - TOXENV=2.7-2.6-nocover
+    - TOXENV=3.2-2.6,coveralls
+    - TOXENV=3.2-2.6-nocover
+    - TOXENV=3.3-2.6,coveralls
+    - TOXENV=3.3-2.6-nocover
+    - TOXENV=3.4-2.6,coveralls
+    - TOXENV=3.4-2.6-nocover
 before_install:
   - |
     case $TOXENV in

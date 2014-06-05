@@ -5,8 +5,8 @@ from itertools import product, chain
 from jinja2 import FileSystemLoader, Environment
 jinja = Environment(loader=FileSystemLoader('.'), trim_blocks=True, lstrip_blocks=True)
 
-#pythons = ['2.7', '3.3']
-pythons = ['2.7']
+pythons = ['2.6', '2.7', '3.2', '3.3', '3.4']
+#pythons = ['2.7']
 deps = [
     'whoosh>=2.6,<2.7',
 ]
