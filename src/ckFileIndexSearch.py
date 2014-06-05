@@ -23,6 +23,8 @@
 # Author   : Chris <ckolumbus@ac-drexler.de>
 # Date     : 2014-04-09
 
+from __future__ import unicode_literals, absolute_import
+
 __version__ = "0.1"
 
 import os, os.path
@@ -106,12 +108,12 @@ def test():
     schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content=TEXT)
     ix = create_in("indexdir", schema)
     writer = ix.writer()
-    writer.add_document(title=u"First document", path=u"/ac",
-                        content=u"This is the first document2 we've added!")
-    writer.add_document(title=u"First xxxxwdocument", path=u"/ac",
-                        content=u"This is the first document2 we've added!")
-    writer.add_document(title=u"Second document", path=u"/b",
-                        content=u"The second one is even more interesting!")
+    writer.add_document(title="First document", path="/ac",
+                        content="This is the first document2 we've added!")
+    writer.add_document(title="First xxxxwdocument", path="/ac",
+                        content="This is the first document2 we've added!")
+    writer.add_document(title="Second document", path="/b",
+                        content="The second one is even more interesting!")
     writer.commit()
     from whoosh.qparser import QueryParser
     results = None
