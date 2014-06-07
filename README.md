@@ -7,8 +7,8 @@ e.g. comments.
 
 ## Dependencies 
 
- * [PDF-Miner](http://...) for extraction
- * [Woosh](http://...) for indexing/search
+ * [PDF-Miner](https://euske.github.io/pdfminer/) for extraction
+ * [Woosh](https://bitbucket.org/mchaput/whoosh/wiki/Home) for indexing/search
 
 
 [![Build
